@@ -120,7 +120,11 @@ def catchment_overview(layers):
     patches.append(Line2D([0], [0], color="#4a90d9", lw=1.5, label="Watercourse"))
     patches.append(mpatches.Patch(facecolor="none", edgecolor="#c62828", label="Protected site (SSSI/SAC/Monument)"))
     patches.append(Line2D([0], [0], color=NAVY, lw=2, label="Final five (bold outline)"))
-    leg = ax.legend(handles=patches, loc="lower left", fontsize=9, framealpha=0.95, title="Legend", title_fontsize=9.5)
+    # Placed in the empty water/whitespace west of the catchment's narrow
+    # upper-middle "neck" (near Slaidburn) - the old lower-left position
+    # covered the Preston/Fylde peninsula at the bottom of the catchment.
+    leg = ax.legend(handles=patches, loc="center left", bbox_to_anchor=(0.0, 0.66),
+                     fontsize=9, framealpha=0.95, title="Legend", title_fontsize=9.5)
     leg.get_frame().set_edgecolor("#bbbbbb")
     ax.set_title("Ribble catchment — all 35 candidates, main rivers, settlements, protected sites", fontsize=12, color=NAVY)
     ax.set_axis_off()
@@ -173,7 +177,10 @@ def site_map(layers, candidate_id):
     minx, miny, maxx, maxy = buf.bounds
 
     fig = plt.figure(figsize=(8, 6.6))
-    ax = fig.add_axes([0.03, 0.06, 0.94, 0.8])
+    # Bottom margin (0.16) is deliberately generous - the two-row fig.legend
+    # below is anchored at figure y=0 and was overlapping the last ~10% of
+    # map content when this was 0.06.
+    ax = fig.add_axes([0.03, 0.16, 0.94, 0.7])
 
     def clip_to_view(gdf):
         return gdf.cx[minx:maxx, miny:maxy]
