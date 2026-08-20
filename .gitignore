@@ -1,0 +1,20 @@
+data/raw/
+data/interim/
+data/processed/*
+*.gpkg
+*.zip
+
+# Sample outputs kept in git deliberately - small, no PII, let a fresh clone
+# run the notebook/app/tests without rebuilding the whole pipeline. Everything
+# else in data/processed/ (the 644MB staging GeoPackage, etc.) stays ignored.
+!data/processed/candidate_longlist.csv
+!data/processed/candidate_longlist.gpkg
+!data/processed/ribble_nfm.duckdb
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.claude/
+.DS_Store
+.venv/
+venv/
